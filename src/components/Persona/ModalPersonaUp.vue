@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { mapMutations, mapActions } from "vuex";
 import ServPersona from "@/services/ServPersona";
 export default {
   name: "PxModalPersonaUp",
@@ -91,15 +92,21 @@ export default {
   },
 
   methods: {
+    ...mapMutations(["convertS", "convertE", "upGet"]),
+    ...mapActions(["getAllPer"]),
     upDate(id, persona) {
       this.dbPersona
         .upDate(id, persona)
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          this.limpiar();
+          this.convertS(data.status);
+          this.getAllPer();
         })
         .catch((error) => {
           console.error("Error:", error);
+          this.convertE(error);
         });
     },
 
@@ -118,14 +125,6 @@ export default {
             (this.persona.apellidos = data.apellidos)
           )
         )
-        .catch((err) => console.log(err.message));
-    },
-
-    getPerson() {
-      this.dbPersona
-        .getPersona(this.idP)
-        .then((res) => res.json())
-        .then((data) => (this.upPersona = data))
         .catch((err) => console.log(err.message));
     },
 

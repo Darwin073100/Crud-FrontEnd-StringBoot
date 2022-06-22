@@ -3,7 +3,6 @@
     <div class="text-center">
       <Span class="h2">Persona</Span>
     </div>
-    <button class="mx-5 btn btn-warning" @click="refresh()">Refresh</button>
     <div class="table-responsive m-5">
       <!-- Button trigger modal -->
       <button
@@ -17,28 +16,26 @@
       <px-modal />
       <px-modal-up :idP="id" />
 
-      <div v-if="activeT">
+      <div v-if="activeS">
         <div class="alert alert-success m-2 alert-dismissible">
           <button
             type="button"
             class="btn-close"
             data-bs-dismiss="alert"
-            @click="active()"
+            @click="convertRESET()"
           ></button>
           <strong>¡Éxito!</strong> La Acción Se Ha Realizado Satisfactoriamente.
-          (Status: {{ params }})
         </div>
       </div>
-      <div v-if="activeF">
+      <div v-if="activeE">
         <div class="alert alert-danger m-2 alert-dismissible">
           <button
             type="button"
             class="btn-close"
             data-bs-dismiss="alert"
-            @click="active()"
+            @click="convertRESET()"
           ></button>
-          <strong>¡Error!</strong> La Acción No Se Pudo Llevar Acabo. (Status:
-          {{ params }})
+          <strong>¡Error!</strong> La Acción No Se Pudo Llevar Acabo.
         </div>
       </div>
 
@@ -89,18 +86,18 @@
 import ServPersona from "@/services/ServPersona";
 import PxModal from "@/components/Persona/ModalPersona.vue";
 import PxModalUp from "@/components/Persona/ModalPersonaUp.vue";
-
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "ViewPersona",
   data() {
     return {
-      personas: [],
       id: null,
-      params: "",
-      store: null,
     };
   },
-
+  computed: {
+    ...mapGetters(["personas"]),
+    ...mapState(["activeS", "activeE", "status", "personas"]),
+  },
   components: {
     PxModal,
     PxModalUp,
@@ -113,19 +110,12 @@ export default {
   },
 
   mounted() {
-    this.dbPersona
-      .getAll()
-      .then((res) => res.json())
-      .then((data) => (this.personas = data))
-      .catch((err) => console.log(err.message));
+    this.getAllPer();
   },
 
   methods: {
-    active() {
-      this.activeT = false;
-      this.activeF = false;
-    },
-
+    ...mapMutations(["convertRESET", "convertS", "convertE"]),
+    ...mapActions(["getAllPer"]),
     selectID(id) {
       this.id = id;
     },
@@ -134,23 +124,14 @@ export default {
       this.dbPersona.delete(id).then((res) => {
         if (res.ok) {
           console.log("Peticion correcta", res.status);
-          this.activeT = true;
-          this.params = res.status;
-          this.refresh();
+          this.convertS();
+          this.getAllPer();
         } else {
           console.error("Peticion incorrecta", res.status);
-          this.activeF = true;
-          this.params = res.status;
+          this.convertE();
+          this.getAllPer();
         }
       });
-    },
-
-    refresh() {
-      this.dbPersona
-        .getAll()
-        .then((res) => res.json())
-        .then((data) => (this.personas = data))
-        .catch((err) => console.log(err.message));
     },
   },
 };

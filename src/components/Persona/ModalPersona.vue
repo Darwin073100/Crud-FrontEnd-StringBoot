@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { mapMutations, mapActions } from "vuex";
 import ServPersona from "@/services/ServPersona";
 export default {
   name: "PxModalPersona",
@@ -82,8 +83,6 @@ export default {
         id: null,
         nombre: null,
         apellidos: null,
-        activeT: false,
-        activeF: false,
       },
     };
   },
@@ -92,27 +91,24 @@ export default {
     this.dbPersona = new ServPersona();
   },
   methods: {
+    ...mapMutations(["convertS", "convertE", "upGet"]),
+    ...mapActions(["getAllPer"]),
     save() {
       this.dbPersona
         .save(this.persona)
         .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
+        .then((res) => {
+          console.log("Success:", res);
           this.limpiar();
-          this.$emit("activeT", this.activeT);
+          this.convertS(res.status);
+          this.getAllPer();
         })
         .catch((error) => {
           console.error("Error:", error);
-          this.$emit("activeF", this.activeF);
+          this.convertE(error);
         });
     },
-    getPerson() {
-      this.dbPersona
-        .getPersona(this.id)
-        .then((res) => res.json())
-        .then((data) => (this.upPersona = data))
-        .catch((err) => console.log(err.message));
-    },
+
     limpiar() {
       this.persona.apellidos = null;
       this.persona.id = null;
