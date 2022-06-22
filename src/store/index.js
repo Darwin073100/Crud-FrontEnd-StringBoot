@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Persona from "./modules/Persona";
+import Inscripcion from "./modules/Inscripcion";
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -31,5 +32,6 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     Persona,
+    Inscripcion,
   },
 });
