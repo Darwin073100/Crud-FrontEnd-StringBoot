@@ -8,7 +8,7 @@ export default class ServPersona {
 
   //Optener un registro en espesífico
   getPersona(idPersona) {
-    return fetch(this.URL+'/'+idPersona);
+    return fetch(this.URL + "/" + idPersona);
   }
 
   //Guardar un registro
@@ -36,7 +36,7 @@ export default class ServPersona {
   //Eliminar un registro
   delete(idPersona) {
     return fetch(this.URL + "/delete/" + idPersona, {
-      method: "DELETE"
+      method: "DELETE",
     });
   }
 }
