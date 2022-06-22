@@ -27,7 +27,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="txtId">Id:</label>
-              <label id="txtId" class="bg-muted form-control">{{ idP }}</label>
+              <label id="txtId" class="bg-muted form-control">{{ id }}</label>
               <label for="txtNombre">Nombre:</label>
               <input
                 class="form-control"
@@ -50,16 +50,16 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
-              @click="limpiar()"
+              @click="setLimpiar()"
             >
               Salir
             </button>
-            <button class="btn btn-success" @click="llenar()">
+            <button class="btn btn-success" @click="getPersona(id)">
               Rellenar Campos
             </button>
             <button
               class="btn btn-primary"
-              v-on:click="upDate(persona.id, persona), limpiar()"
+              v-on:click="upDate(persona.id, persona), setLimpiar()"
               data-bs-dismiss="modal"
             >
               Actualizar
@@ -72,70 +72,41 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations, mapActions, mapGetters, mapState } from "vuex";
 import ServPersona from "@/services/ServPersona";
 export default {
   name: "PxModalPersonaUp",
   data() {
-    return {
-      persona: {
-        id: null,
-        nombre: null,
-        apellidos: null,
-      },
-    };
+    return {};
   },
   dbPersona: null,
-
+  computed: {
+    ...mapGetters("Persona", ["persona"]),
+    ...mapState("Persona", ["persona", "id"]),
+  },
   created() {
     this.dbPersona = new ServPersona();
   },
-
   methods: {
     ...mapMutations(["convertS", "convertE", "upGet"]),
-    ...mapActions(["getAllPer"]),
+    ...mapMutations("Persona", ["setLimpiar"]),
+    ...mapActions("Persona", ["getAll", "getPersona"]),
     upDate(id, persona) {
       this.dbPersona
         .upDate(id, persona)
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.limpiar();
+          this.setLimpiar();
           this.convertS(data.status);
-          this.getAllPer();
+          this.getAll();
         })
         .catch((error) => {
           console.error("Error:", error);
           this.convertE(error);
         });
     },
-
-    propsId() {
-      this.persona.id = this.idP;
-    },
-
-    llenar() {
-      this.dbPersona
-        .getPersona(this.idP)
-        .then((res) => res.json())
-        .then(
-          (data) => (
-            (this.persona.id = data.id),
-            (this.persona.nombre = data.nombre),
-            (this.persona.apellidos = data.apellidos)
-          )
-        )
-        .catch((err) => console.log(err.message));
-    },
-
-    limpiar() {
-      this.persona.apellidos = null;
-      this.persona.id = null;
-      this.persona.nombre = null;
-    },
   },
-
-  props: ["idP"],
 };
 </script>
 

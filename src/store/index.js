@@ -1,23 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import Persona from "./modules/Persona";
 
 Vue.use(Vuex);
-const URL_PERSONA = "http://localhost:8090/persona";
 export default new Vuex.Store({
   state: {
     activeS: false,
     activeE: false,
-    personas: [],
-  },
-  getters: {
-    personas(state) {
-      return state.personas;
-    },
   },
   mutations: {
-    setPersonas(state, personas) {
-      state.personas = personas;
-    },
     upGetConvert(state) {
       if (state.upGet == true) {
         state.upGet = false;
@@ -25,12 +16,10 @@ export default new Vuex.Store({
         state.upGet = true;
       }
     },
-    convertS(state, status) {
-      state.status = status;
+    convertS(state) {
       state.activeS = true;
     },
-    convertE(state, status) {
-      state.status = status;
+    convertE(state) {
       state.activeE = true;
     },
 
@@ -39,15 +28,8 @@ export default new Vuex.Store({
       state.activeS = false;
     },
   },
-  actions: {
-    getAllPer(state) {
-      fetch(URL_PERSONA + "/all")
-        .then((res) => res.json())
-        .then((data) => {
-          state.commit("setPersonas", data);
-        })
-        .catch((err) => console.log(err.message));
-    },
+  actions: {},
+  modules: {
+    Persona,
   },
-  modules: {},
 });

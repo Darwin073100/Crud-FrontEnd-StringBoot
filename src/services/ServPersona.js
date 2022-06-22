@@ -1,16 +1,6 @@
 export default class ServPersona {
   URL = "http://localhost:8090/persona";
 
-  //Optener todos los registros
-  getAll() {
-    return fetch(this.URL + "/all");
-  }
-
-  //Optener un registro en espesífico
-  getPersona(idPersona) {
-    return fetch(this.URL + "/" + idPersona);
-  }
-
   //Guardar un registro
   save(persona) {
     return fetch(this.URL + "/save", {

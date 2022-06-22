@@ -2,7 +2,7 @@
   <div class="bg-primary pt-2 px-2">
     <router-link to="/" class="btn btn-dark">Inicio</router-link>
     <div class="bg-primary h1 text-white" id="nav">
-      CRUD 2022 (MINI CONTROL ESCOLAR)
+      Consumo Del API De SpringBoot Y DB PostgreSQL
     </div>
   </div>
 </template>

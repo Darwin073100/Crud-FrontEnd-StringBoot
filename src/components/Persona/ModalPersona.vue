@@ -21,6 +21,7 @@
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              @click="setLimpiar()"
             ></button>
           </div>
           <div class="modal-body">
@@ -55,6 +56,7 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
+              @click="setLimpiar()"
             >
               Salir
             </button>
@@ -73,46 +75,38 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations, mapActions, mapState } from "vuex";
 import ServPersona from "@/services/ServPersona";
 export default {
   name: "PxModalPersona",
   data() {
-    return {
-      persona: {
-        id: null,
-        nombre: null,
-        apellidos: null,
-      },
-    };
+    return {};
   },
   dbPersona: null,
   created() {
     this.dbPersona = new ServPersona();
   },
+  computed: {
+    ...mapState("Persona", ["persona"]),
+  },
   methods: {
     ...mapMutations(["convertS", "convertE", "upGet"]),
-    ...mapActions(["getAllPer"]),
+    ...mapMutations("Persona", ["setLimpiar"]),
+    ...mapActions("Persona", ["getAll"]),
     save() {
       this.dbPersona
         .save(this.persona)
         .then((response) => response.json())
         .then((res) => {
           console.log("Success:", res);
-          this.limpiar();
+          this.setLimpiar();
           this.convertS(res.status);
-          this.getAllPer();
+          this.getAll();
         })
         .catch((error) => {
           console.error("Error:", error);
           this.convertE(error);
         });
-    },
-
-    limpiar() {
-      this.persona.apellidos = null;
-      this.persona.id = null;
-      this.persona.nombre = null;
     },
   },
 };

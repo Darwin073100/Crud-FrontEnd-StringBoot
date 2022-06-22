@@ -14,7 +14,7 @@
         Agregar Un Registro
       </button>
       <px-modal />
-      <px-modal-up :idP="id" />
+      <px-modal-up />
 
       <div v-if="activeS">
         <div class="alert alert-success m-2 alert-dismissible">
@@ -62,7 +62,7 @@
                   class="btn btn-warning me-3"
                   data-bs-toggle="modal"
                   data-bs-target="#staticBackdropUP"
-                  @click="selectID(p.id)"
+                  @click="setId(p.id)"
                 >
                   Editar
                 </button>
@@ -90,13 +90,12 @@ import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "ViewPersona",
   data() {
-    return {
-      id: null,
-    };
+    return {};
   },
   computed: {
-    ...mapGetters(["personas"]),
-    ...mapState(["activeS", "activeE", "status", "personas"]),
+    ...mapGetters("Persona", ["personas"]),
+    ...mapState("Persona", ["personas"]),
+    ...mapState(["activeS", "activeE"]),
   },
   components: {
     PxModal,
@@ -110,26 +109,25 @@ export default {
   },
 
   mounted() {
-    this.getAllPer();
+    this.getAll();
   },
 
   methods: {
     ...mapMutations(["convertRESET", "convertS", "convertE"]),
-    ...mapActions(["getAllPer"]),
-    selectID(id) {
-      this.id = id;
-    },
+    ...mapMutations("Persona", ["setId"]),
+    ...mapActions("Persona", ["getAll"]),
+
     deleteP(id) {
       console.log("Llamada a delete persona");
       this.dbPersona.delete(id).then((res) => {
         if (res.ok) {
           console.log("Peticion correcta", res.status);
           this.convertS();
-          this.getAllPer();
+          this.getAll();
         } else {
           console.error("Peticion incorrecta", res.status);
           this.convertE();
-          this.getAllPer();
+          this.getAll();
         }
       });
     },
