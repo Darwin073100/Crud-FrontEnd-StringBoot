@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import Persona from "./modules/Persona";
 import Inscripcion from "./modules/Inscripcion";
+import Carrera from "./modules/Carrera";
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -33,5 +34,6 @@ export default new Vuex.Store({
   modules: {
     Persona,
     Inscripcion,
+    Carrera,
   },
 });
