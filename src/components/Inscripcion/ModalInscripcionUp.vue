@@ -41,13 +41,13 @@
                 class="form-control"
                 type="text"
                 id="txtIdCarrera"
-                v-model="Inscripcion.idCarrera"
+                v-model="inscripcion.idCarrera"
               />
 
               <label for="txtFecha">Fecha:</label>
               <input
                 class="form-control"
-                type="text"
+                type="datetime-local"
                 id="txtApellidos"
                 v-model="inscripcion.fecha"
               />

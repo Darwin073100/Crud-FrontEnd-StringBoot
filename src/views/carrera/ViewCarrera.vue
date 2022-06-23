@@ -120,7 +120,6 @@ export default {
     deleteC(id) {
       let deleteResp = this.dbCarrera.delete(id);
       deleteResp.then((res) => {
-        console.log("Peticion correcta", res.status);
         if (res.ok) {
           console.log("Peticion correcta", res.status);
           this.convertS();

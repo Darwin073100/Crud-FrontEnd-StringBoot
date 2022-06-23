@@ -35,7 +35,7 @@ export default class ServInscripcion {
 
   //Eliminar un registro
   delete(idInscripcion) {
-    fetch(this.URL + "/delete/" + idInscripcion, {
+    return fetch(this.URL + "/delete/" + idInscripcion, {
       method: "DELETE",
     });
   }

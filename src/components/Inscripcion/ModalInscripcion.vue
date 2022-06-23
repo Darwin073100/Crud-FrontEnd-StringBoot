@@ -30,7 +30,6 @@
               <input
                 class="form-control"
                 type="text"
-                name=""
                 id="txtIdPersona"
                 v-model="inscripcionS.idPersona"
               />
@@ -39,14 +38,14 @@
                 class="form-control"
                 type="text"
                 id="txtIdCarrera"
-                v-model="InscripcionS.idCarrera"
+                v-model="inscripcionS.idCarrera"
               />
 
               <label for="txtFecha">Fecha:</label>
               <input
                 class="form-control"
-                type="text"
-                id="txtApellidos"
+                type="datetime-local"
+                id="txtFecha"
                 v-model="inscripcionS.fecha"
               />
             </div>

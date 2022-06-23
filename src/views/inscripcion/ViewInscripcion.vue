@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import ServInscripciones from "@/services/ServInscripcion";
+import ServInscripcion from "@/services/ServInscripcion";
 import PxModalInscripcion from "@/components/Inscripcion/ModalInscripcion.vue";
 import PxModalInscripcionUp from "@/components/Inscripcion/ModalInscripcionUp.vue";
 import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
@@ -108,7 +108,7 @@ export default {
   dbInscripcion: null,
 
   created() {
-    this.dbInscripcion = new ServInscripciones();
+    this.dbInscripcion = new ServInscripcion();
   },
 
   mounted() {
@@ -122,7 +122,7 @@ export default {
 
     deleteI(id) {
       console.log("Llamada a delete inscripcion");
-      this.dbPersona.delete(id).then((res) => {
+      this.dbInscripcion.delete(id).then((res) => {
         if (res.ok) {
           console.log("Peticion correcta", res.status);
           this.convertS();
