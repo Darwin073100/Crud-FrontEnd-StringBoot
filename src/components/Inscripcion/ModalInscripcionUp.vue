@@ -67,7 +67,7 @@
             </button>
             <button
               class="btn btn-primary"
-              v-on:click="upDate(persona.id, persona), setLimpiar()"
+              v-on:click="upDate(inscripcion.id, inscripcion), setLimpiar()"
               data-bs-dismiss="modal"
             >
               Actualizar
