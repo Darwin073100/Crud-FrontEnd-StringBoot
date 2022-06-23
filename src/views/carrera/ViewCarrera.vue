@@ -69,7 +69,7 @@
                 <button
                   :id="c.id"
                   class="btn btn-danger"
-                  @click="deleteC(c.id)"
+                  v-on:click="deleteC(c.id)"
                 >
                   Eliminar
                 </button>
@@ -118,8 +118,9 @@ export default {
     ...mapActions("Carrera", ["getAll"]),
 
     deleteC(id) {
-      console.log("Llamada a delete carrera");
-      this.dbCarrera.delete(id).then((res) => {
+      let deleteResp = this.dbCarrera.delete(id);
+      deleteResp.then((res) => {
+        console.log("Peticion correcta", res.status);
         if (res.ok) {
           console.log("Peticion correcta", res.status);
           this.convertS();

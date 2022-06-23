@@ -35,7 +35,7 @@ export default class ServCarrera {
 
   //Eliminar un registro
   delete(idCarrera) {
-    fetch(this.URL + "/delete/" + idCarrera, {
+    return fetch(this.URL + "/delete/" + idCarrera, {
       method: "DELETE",
     });
   }
