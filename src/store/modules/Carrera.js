@@ -1,4 +1,4 @@
-const URL = "http://localhost:8090/carrera";
+const URL = "https://api-spring-postgresql.herokuapp.com/carrera";
 
 export default {
   namespaced: true,

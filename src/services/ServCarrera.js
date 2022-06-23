@@ -1,5 +1,5 @@
 export default class ServCarrera {
-  URL = "http://localhost:8090/carrera";
+  URL = "https://api-spring-postgresql.herokuapp.com/carrera";
 
   //Optener todos los registros
   getAll() {

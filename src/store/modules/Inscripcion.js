@@ -1,4 +1,4 @@
-const URL = "http://localhost:8090/inscripcion";
+const URL = "https://api-spring-postgresql.herokuapp.com/inscripcion";
 
 export default {
   namespaced: true,

@@ -1,5 +1,5 @@
 export default class ServPersona {
-  URL = "http://localhost:8090/persona";
+  URL = "https://api-spring-postgresql.herokuapp.com/persona";
 
   //Guardar un registro
   save(persona) {

@@ -1,5 +1,5 @@
 export default class ServInscripcion {
-  URL = "http://localhost:8090/inscripcion";
+  URL = "https://api-spring-postgresql.herokuapp.com/inscripcion";
 
   //Optener todos los registros
   getAll() {
